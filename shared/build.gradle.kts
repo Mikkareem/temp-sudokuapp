@@ -66,7 +66,7 @@ kotlin {
                 localDevices {
                     create("pixel9aApi36") {
                         device = "Pixel 9a"
-                        apiLevel = 36
+                        apiLevel = 30
                         systemImageSource = "aosp-atd"
                     }
                 }
@@ -74,6 +74,12 @@ kotlin {
         }
         withHostTest {
             isIncludeAndroidResources = true
+        }
+
+        packaging {
+            // Ignore the conflicting license files during packaging
+            resources.excludes.add("META-INF/AL2.0")
+            resources.excludes.add("META-INF/LGPL2.1") // Good practice to add this one too
         }
     }
 
