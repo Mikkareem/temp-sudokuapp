@@ -103,8 +103,8 @@ android {
         managedDevices {
             localDevices {
                 create("pixel9aApi36") {
-                    device = "Pixel 9a"
-                    apiLevel = 36
+                    device = "Pixel 2"
+                    apiLevel = 30
                     systemImageSource = "aosp-atd"
                 }
             }

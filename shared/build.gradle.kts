@@ -65,7 +65,7 @@ kotlin {
             managedDevices {
                 localDevices {
                     create("pixel9aApi36") {
-                        device = "Pixel 9a"
+                        device = "Pixel 2"
                         apiLevel = 30
                         systemImageSource = "aosp-atd"
                     }
