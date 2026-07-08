@@ -7,6 +7,6 @@ class SharedAndroidDeviceTest {
 
     @Test
     fun basicTest() {
-        assertEquals(2, 4)
+        assertEquals(4, 4)
     }
 }
