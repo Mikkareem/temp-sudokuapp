@@ -96,6 +96,14 @@ android {
     }
 }
 
+androidComponents {
+    onVariants { variant ->
+        tasks.named("test${variant.name.replaceFirstChar { it.uppercase() }}UnitTest") {
+            dependsOn(":shared:testAndroidUnitTest")
+        }
+    }
+}
+
 /*
 
 R8 Configuration Analyzer

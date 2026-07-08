@@ -19,7 +19,7 @@ captures
 node_modules/
 
 gradle/wrapper/gradle-wrapper.properties
-
+androidApp/release
 
 keystore.properties
 keystore/
