@@ -1,0 +1,51 @@
+name: Android Debug Apk
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Gradle Wrapper Setup
+        env:
+          GRADLE_DISTRIBUTION_URL: "https://services.gradle.org/distributions/gradle-${{ vars.GRADLE_WRAPPER_VERSION }}-bin.zip"
+        run: |
+          chmod +x gradle-wrapper-setup.sh && ./gradle-wrapper-setup.sh
+          cat gradle/wrapper/gradle-wrapper.properties
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # AUTOMATIC CACHING & CLEANUP AVAILABLE IN ENHANCED MODE
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: KeyStore Setup
+        run: |
+          echo "${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}" | base64 --decode > "${{ github.workspace }}/secrets/release_keystore.jks"
+
+      - name: Create Keystore Properties File
+        run: |
+          cat > keystore.properties <<EOF
+          storeFile=${{ github.workspace }}/secrets/release_keystore.jks
+          storePassword=${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_RELEASE_KEY_ALIAS }}
+          keyAliasPassword=${{ secrets.ANDROID_RELEASE_KEY_ALIAS_PASSWORD }}
+          EOF
+          
+      - name: Build Release App
+        run: ./gradlew :androidApp:assembleRelease
+
+      - name: Upload Release Apk of SudokuApp
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-apk
+          path: 'androidApp/build/outputs/apk/release/androidApp-release.apk'
+          retention-days: 3

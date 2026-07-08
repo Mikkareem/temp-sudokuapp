@@ -1,0 +1,38 @@
+name: Android Debug Apk
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Gradle Wrapper Setup
+        env:
+          GRADLE_DISTRIBUTION_URL: "https://services.gradle.org/distributions/gradle-${{ vars.GRADLE_WRAPPER_VERSION }}-bin.zip"
+        run: |
+          chmod +x gradle-wrapper-setup.sh && ./gradle-wrapper-setup.sh
+          cat gradle/wrapper/gradle-wrapper.properties
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # AUTOMATIC CACHING & CLEANUP AVAILABLE IN ENHANCED MODE
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+          
+      - name: Build Debug App
+        run: ./gradlew :androidApp:assembleDebug
+
+      - name: Upload Debug Apk of SudokuApp
+        uses: actions/upload-artifact@v7
+        with:
+          name: debug-apk
+          path: 'androidApp/build/outputs/apk/debug/androidApp-debug.apk'
+          retention-days: 3
