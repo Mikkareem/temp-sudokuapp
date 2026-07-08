@@ -1,4 +1,4 @@
-name: Android Debug Apk
+name: Android Release Apk
 
 on:
   workflow_dispatch:
