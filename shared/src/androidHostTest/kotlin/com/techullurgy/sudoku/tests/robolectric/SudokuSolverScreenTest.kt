@@ -1,4 +1,4 @@
-package com.techullurgy.sudoku.tests.robolectric
+package com.techullurgy.games.sudoku.tests.robolectric
 
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ComposeUiTest
@@ -12,11 +12,11 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.v2.runComposeUiTest
-import com.techullurgy.sudoku.common.test.utils.RobolectricTest
-import com.techullurgy.sudoku.presentation.screens.SudokuSolverScreen
-import com.techullurgy.sudoku.presentation.screens.SudokuSolverViewModel
-import com.techullurgy.sudoku.utils.col
-import com.techullurgy.sudoku.utils.row
+import com.techullurgy.games.sudoku.common.test.utils.RobolectricTest
+import com.techullurgy.games.sudoku.presentation.screens.SudokuSolverScreen
+import com.techullurgy.games.sudoku.presentation.screens.SudokuSolverViewModel
+import com.techullurgy.games.sudoku.utils.col
+import com.techullurgy.games.sudoku.utils.row
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule

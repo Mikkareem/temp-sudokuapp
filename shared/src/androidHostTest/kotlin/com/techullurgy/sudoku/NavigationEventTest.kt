@@ -1,4 +1,4 @@
-package com.techullurgy.sudoku
+package com.techullurgy.games.sudoku
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Button

@@ -43,7 +43,7 @@ kotlin {
     jvm()
 
     android {
-        namespace = "com.techullurgy.sudoku.shared"
+        namespace = "com.techullurgy.games.sudoku.shared"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()

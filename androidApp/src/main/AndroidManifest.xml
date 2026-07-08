@@ -14,7 +14,7 @@
             tools:targetApi="29" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.techullurgy.games.sudoku.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

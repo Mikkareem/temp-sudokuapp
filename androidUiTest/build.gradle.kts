@@ -9,7 +9,7 @@ dependencies {
 }
 
 android {
-    namespace = "com.techullurgy.sudoku.uitests"
+    namespace = "com.techullurgy.games.sudoku.uitests"
     compileSdk {
         version =
             release(

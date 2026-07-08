@@ -17,11 +17,11 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "com.techullurgy.sudoku.MainKt"
+        mainClass = "com.techullurgy.games.sudoku.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.techullurgy.sudoku"
+            packageName = "com.techullurgy.games.sudoku"
             packageVersion = "1.0.0"
         }
     }

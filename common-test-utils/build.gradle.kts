@@ -7,7 +7,7 @@ plugins {
 
 kotlin {
     android {
-        namespace = "com.techullurgy.sudoku.common.test.utils"
+        namespace = "com.techullurgy.games.sudoku.common.test.utils"
         compileSdk =
             libs.versions.android.compileSdk
                 .get()

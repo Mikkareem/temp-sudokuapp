@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.techullurgy.sudoku.benchmark"
+    namespace = "com.techullurgy.games.sudoku.benchmark"
     compileSdk {
         version =
             release(

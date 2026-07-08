@@ -20,6 +20,7 @@ node_modules/
 
 gradle/wrapper/gradle-wrapper.properties
 androidApp/release
+desktopApp/bin
 
 keystore.properties
 keystore/

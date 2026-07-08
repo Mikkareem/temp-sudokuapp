@@ -1,4 +1,4 @@
-package com.techullurgy.sudoku.uitests
+package com.techullurgy.games.sudoku.uitests
 
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,8 +19,8 @@ class AppStartupTest {
         val intent =
             Intent().apply {
                 setClassName(
-                    "com.techullurgy.sudoku",
-                    "com.techullurgy.sudoku.MainActivity",
+                    "com.techullurgy.games.sudoku",
+                    "com.techullurgy.games.sudoku.MainActivity",
                 )
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
@@ -33,7 +33,7 @@ class AppStartupTest {
         // kill recents (optional hard reset)
         uiAutomator {
             pressHome()
-            device.executeShellCommand("pm clear com.techullurgy.sudoku")
+            device.executeShellCommand("pm clear com.techullurgy.games.sudoku")
         }
     }
 

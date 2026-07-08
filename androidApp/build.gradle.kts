@@ -38,14 +38,14 @@ private enum class InstrumentedTestModes(val mode: String) {
 }
 
 android {
-    namespace = "com.techullurgy.sudoku"
+    namespace = "com.techullurgy.games.sudoku"
     compileSdk =
         libs.versions.android.compileSdk
             .get()
             .toInt()
 
     defaultConfig {
-        applicationId = "com.techullurgy.sudoku"
+        applicationId = "com.techullurgy.games.sudoku"
         minSdk =
             libs.versions.android.minSdk
                 .get()

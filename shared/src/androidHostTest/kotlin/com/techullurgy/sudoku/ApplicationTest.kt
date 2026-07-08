@@ -1,4 +1,4 @@
-package com.techullurgy.sudoku
+package com.techullurgy.games.sudoku
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -12,12 +12,12 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.v2.runComposeUiTest
-import com.techullurgy.sudoku.presentation.navigation.Home
-import com.techullurgy.sudoku.presentation.navigation.Navigator
-import com.techullurgy.sudoku.presentation.navigation.SudokuGameLevelSelection
-import com.techullurgy.sudoku.presentation.screens.SudokuGameScreen
-import com.techullurgy.sudoku.presentation.viewmodels.InitialGameBoard
-import com.techullurgy.sudoku.presentation.viewmodels.SudokuGameViewModel
+import com.techullurgy.games.sudoku.presentation.navigation.Home
+import com.techullurgy.games.sudoku.presentation.navigation.Navigator
+import com.techullurgy.games.sudoku.presentation.navigation.SudokuGameLevelSelection
+import com.techullurgy.games.sudoku.presentation.screens.SudokuGameScreen
+import com.techullurgy.games.sudoku.presentation.viewmodels.InitialGameBoard
+import com.techullurgy.games.sudoku.presentation.viewmodels.SudokuGameViewModel
 import org.junit.After
 import org.junit.Rule
 import org.junit.runner.RunWith

@@ -1,4 +1,4 @@
-package com.techullurgy.sudoku
+package com.techullurgy.games.sudoku
 
 import androidx.compose.animation.EnterExitState
 import androidx.compose.material3.Text
