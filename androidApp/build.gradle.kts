@@ -33,6 +33,10 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+private enum class InstrumentedTestModes(val mode: String) {
+    Connected("connected"), Pixel9aApi36("pixel9aApi36")
+}
+
 android {
     namespace = "com.techullurgy.sudoku"
     compileSdk =
@@ -104,7 +108,7 @@ android {
     testOptions {
         managedDevices {
             localDevices {
-                create("pixel9aApi36") {
+                create(InstrumentedTestModes.Pixel9aApi36.mode) {
                     device = "Pixel 2"
                     apiLevel = 30
                     systemImageSource = "aosp-atd"
@@ -118,17 +122,13 @@ tasks.withType<Test>().configureEach {
     dependsOn(":shared:testAndroidHostTest")
 }
 
-private enum class InstrumentedTestModes(val mode: String) {
-    Connected("connected"), Pixel9aApi36("pixel9aApi36")
-}
-
 afterEvaluate {
     tasks.matching {
         InstrumentedTestModes.entries.map { it.mode }.any { m -> it.name.startsWith(m) } && it.name.endsWith("Check")
     }.configureEach {
         val instrumentedTestMode = when {
-            name.startsWith("connected") -> InstrumentedTestModes.Connected
-            name.startsWith("pixel9aApi36") -> InstrumentedTestModes.Pixel9aApi36
+            name.startsWith(InstrumentedTestModes.Connected.mode) -> InstrumentedTestModes.Connected
+            name.startsWith(InstrumentedTestModes.Pixel9aApi36.mode) -> InstrumentedTestModes.Pixel9aApi36
             else -> error("No logic found for the Check Task of name $name")
         }
 
@@ -146,8 +146,8 @@ afterEvaluate {
         InstrumentedTestModes.entries.map { it.mode }.any { m -> it.name.startsWith(m) } && it.name.endsWith("AndroidTest")
     }.configureEach {
         val instrumentedTestMode = when {
-            name.startsWith("connected") -> InstrumentedTestModes.Connected
-            name.startsWith("pixel9aApi36") -> InstrumentedTestModes.Pixel9aApi36
+            name.startsWith(InstrumentedTestModes.Connected.mode) -> InstrumentedTestModes.Connected
+            name.startsWith(InstrumentedTestModes.Pixel9aApi36.mode) -> InstrumentedTestModes.Pixel9aApi36
             else -> error("No logic found for the AndroidTest Task of name $name")
         }
 
