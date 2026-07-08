@@ -59,6 +59,19 @@ kotlin {
         androidResources {
             enable = true
         }
+        withDeviceTest {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+            managedDevices {
+                localDevices {
+                    create("pixel9aApi36") {
+                        device = "Pixel 9a"
+                        apiLevel = 36
+                        systemImageSource = "aosp-atd"
+                    }
+                }
+            }
+        }
         withHostTest {
             isIncludeAndroidResources = true
         }
@@ -128,6 +141,9 @@ kotlin {
 
         try {
             getByName("androidDeviceTest").dependencies {
+                implementation(libs.androidx.compose.uitest.junit4.android)
+                implementation(libs.androidx.compose.uitest.manifest)
+
                 implementation(libs.kotest.runner.junit4)
 
                 implementation(project.dependencies.platform(libs.koin.bom))
@@ -140,8 +156,6 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.ui.tooling)
-
-//    ktlintRuleset(libs.ktlint.compose.ruleset)
 }
 
 kover {

@@ -1,3 +1,7 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.gradle.internal.tasks.AndroidTestTask
+import com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask
+import com.android.build.gradle.internal.tasks.ManagedDeviceInstrumentationTestTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
@@ -94,12 +98,67 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    testOptions {
+        managedDevices {
+            localDevices {
+                create("pixel9aApi36") {
+                    device = "Pixel 9a"
+                    apiLevel = 36
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
 }
 
-androidComponents {
-    onVariants { variant ->
-        tasks.named("test${variant.name.replaceFirstChar { it.uppercase() }}UnitTest") {
-            dependsOn(":shared:testAndroidUnitTest")
+tasks.withType<Test>().configureEach {
+    dependsOn(":shared:testAndroidHostTest")
+}
+
+private enum class InstrumentedTestModes(val mode: String) {
+    Connected("connected"), Pixel9aApi36("pixel9aApi36")
+}
+
+afterEvaluate {
+    tasks.matching {
+        InstrumentedTestModes.entries.map { it.mode }.any { m -> it.name.startsWith(m) } && it.name.endsWith("Check")
+    }.configureEach {
+
+        val instrumentedTestMode = when {
+            name.startsWith("connected") -> InstrumentedTestModes.Connected
+            name.startsWith("pixel9aApi36") -> InstrumentedTestModes.Pixel9aApi36
+            else -> error("No logic found for the Check Task of name $name")
+        }
+
+        when(instrumentedTestMode) {
+            InstrumentedTestModes.Connected -> {
+                dependsOn(":shared:androidConnectedCheck")
+            }
+            InstrumentedTestModes.Pixel9aApi36 -> {
+                dependsOn(":shared:${instrumentedTestMode.mode}Check")
+            }
+        }
+    }
+
+    tasks.matching {
+        InstrumentedTestModes.entries.map { it.mode }.any { m -> it.name.startsWith(m) } && it.name.endsWith("AndroidTest")
+    }.configureEach {
+        if(name.startsWith("device")) return@configureEach
+
+        val instrumentedTestMode = when {
+            name.startsWith("connected") -> InstrumentedTestModes.Connected
+            name.startsWith("pixel9aApi36") -> InstrumentedTestModes.Pixel9aApi36
+            else -> error("No logic found for the AndroidTest Task of name $name")
+        }
+
+        when(instrumentedTestMode) {
+            InstrumentedTestModes.Connected -> {
+                dependsOn(":shared:connectedAndroidDeviceTest")
+            }
+            InstrumentedTestModes.Pixel9aApi36 -> {
+                dependsOn(":shared:${instrumentedTestMode.mode}AndroidDeviceTest")
+            }
         }
     }
 }

@@ -1,0 +1,49 @@
+name: Android GMD Debug Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  gmd-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20 # Default 360 (6 hours)
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Gradle Wrapper Setup
+        env:
+          GRADLE_DISTRIBUTION_URL: "https://services.gradle.org/distributions/gradle-${{ vars.GRADLE_WRAPPER_VERSION }}-bin.zip"
+        run: |
+          chmod +x gradle-wrapper-setup.sh && ./gradle-wrapper-setup.sh
+          cat gradle/wrapper/gradle-wrapper.properties
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # AUTOMATIC CACHING & CLEANUP AVAILABLE IN ENHANCED MODE
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Enable KVM for Android Emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -al /dev/kvm
+
+      - name: Debug Test on Gradle Managed Device
+        run: ./gradlew :androidApp:pixel9aApi36DebugAndroidTest --no-daemon
+
+      - name: Upload Test Reports
+        if: always() # Ensure this runs even if the tests fail
+        uses: actions/upload-artifact@v7
+        with:
+          name: instrumented-test-results
+          # Adjust the path based on your KMP module structure
+          path: '**/build/reports/'
+          retention-days: 1
