@@ -42,8 +42,8 @@ internal fun SudokuBoard(
     Grid(
         config = {
             repeat(9) {
-                row(1.fr)
-                column(1.fr)
+                row(1f / 9)
+                column(1f / 9)
             }
         },
         modifier =

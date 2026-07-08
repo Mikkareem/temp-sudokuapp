@@ -17,13 +17,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.techullurgy.sudoku.presentation.components.Container2
 import com.techullurgy.sudoku.presentation.components.NumberPad
 import com.techullurgy.sudoku.presentation.components.SudokuBoard
+import org.koin.compose.KoinApplicationPreview
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.dsl.module
+import org.koin.plugin.module.dsl.viewModel
 
 @Composable
 internal fun SudokuSolverScreen(
@@ -103,5 +107,21 @@ internal fun SudokuSolverScreen(
                 onNumberClick = { viewModel.onAction(SudokuSolverAction.OnNumberClick(it)) },
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SudokuSolverScreenPreview() {
+    KoinApplicationPreview(
+        application = {
+            modules(
+                module { viewModel<SudokuSolverViewModel>() }
+            )
+        }
+    ) {
+        SudokuSolverScreen(
+            onClose = {}
+        )
     }
 }

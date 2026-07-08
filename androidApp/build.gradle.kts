@@ -1,7 +1,3 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
-import com.android.build.gradle.internal.tasks.AndroidTestTask
-import com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask
-import com.android.build.gradle.internal.tasks.ManagedDeviceInstrumentationTestTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
@@ -59,6 +55,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -129,7 +126,6 @@ afterEvaluate {
     tasks.matching {
         InstrumentedTestModes.entries.map { it.mode }.any { m -> it.name.startsWith(m) } && it.name.endsWith("Check")
     }.configureEach {
-
         val instrumentedTestMode = when {
             name.startsWith("connected") -> InstrumentedTestModes.Connected
             name.startsWith("pixel9aApi36") -> InstrumentedTestModes.Pixel9aApi36
@@ -149,8 +145,6 @@ afterEvaluate {
     tasks.matching {
         InstrumentedTestModes.entries.map { it.mode }.any { m -> it.name.startsWith(m) } && it.name.endsWith("AndroidTest")
     }.configureEach {
-        if(name.startsWith("device")) return@configureEach
-
         val instrumentedTestMode = when {
             name.startsWith("connected") -> InstrumentedTestModes.Connected
             name.startsWith("pixel9aApi36") -> InstrumentedTestModes.Pixel9aApi36
