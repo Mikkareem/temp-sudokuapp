@@ -29,6 +29,7 @@ jobs:
 
       - name: KeyStore Setup
         run: |
+          mkdir -p "${{ github.workspace }}/secrets"
           echo "${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }}" | base64 --decode > "${{ github.workspace }}/secrets/release_keystore.jks"
 
       - name: Create Keystore Properties File
