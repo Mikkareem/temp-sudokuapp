@@ -36,6 +36,10 @@ jobs:
           sudo udevadm trigger --name-match=kvm
           ls -al /dev/kvm
 
+      - name: Accept Android SDK Licenses
+        # Pipes 'y' to every prompt the sdkmanager throws, automatically accepting them
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+
       - name: Debug Test on Gradle Managed Device
         run: ./gradlew :androidApp:pixel9aApi36DebugAndroidTest --no-daemon
 
