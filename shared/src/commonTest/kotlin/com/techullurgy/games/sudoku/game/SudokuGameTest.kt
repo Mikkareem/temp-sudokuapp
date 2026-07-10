@@ -6,8 +6,6 @@ import com.techullurgy.games.sudoku.utils.row
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import kotlin.text.get
-import kotlin.text.set
 
 class SudokuGameTest : FunSpec() {
     override fun isolationMode(): IsolationMode = IsolationMode.InstancePerTest
@@ -25,9 +23,9 @@ class SudokuGameTest : FunSpec() {
 
                 val expected =
                     actualBoardBeforeUpdate.toMutableList().apply {
-                        this[24.row] set
+                        this[24.row] =
                             this[24.row].toMutableList().apply {
-                                this[24.col] set 6
+                                this[24.col] = 6
                             }
                     }
 

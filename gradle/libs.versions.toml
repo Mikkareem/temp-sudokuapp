@@ -44,7 +44,7 @@ datastore = "1.2.1"
 adaptive = "1.9.0"
 firebase-bom = "34.15.0"
 robolectric = "4.16.1"
-roborazzi = "1.65.0"
+roborazzi = "1.67.0"
 kotest = "6.2.1"
 assertk = "0.28.1"
 mockk = "1.14.9"
@@ -193,6 +193,7 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
 roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }
 roborazzi-rule = { group = "io.github.takahirom.roborazzi", name = "roborazzi-junit-rule", version.ref = "roborazzi" }
+roborazzi-painter = { group = "io.github.takahirom.roborazzi", name = "roborazzi-painter", version.ref = "roborazzi" }
 assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "assertk" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }

@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
 
     alias(libs.plugins.kover) apply false
+    alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.detekt)
 }
 private val detektComposeRuleSet = libs.detekt.compose.ruleset

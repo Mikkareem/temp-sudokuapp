@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.kotest)
     alias(libs.plugins.koinCompiler)
     alias(libs.plugins.kover)
+    alias(libs.plugins.roborazzi)
 }
 
 kotlin {
@@ -136,6 +137,10 @@ kotlin {
                 implementation(libs.robolectric)
                 implementation(libs.androidx.compose.uitest.junit4.android)
                 implementation(libs.androidx.compose.uitest.manifest)
+
+                implementation(libs.roborazzi)
+                implementation(libs.roborazzi.compose)
+                implementation(libs.roborazzi.rule)
 
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.test.junit4)
