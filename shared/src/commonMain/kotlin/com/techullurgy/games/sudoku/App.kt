@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDe
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.techullurgy.games.sudoku.di.coreModule
 import com.techullurgy.games.sudoku.presentation.components.TruchetTiles
 import com.techullurgy.games.sudoku.presentation.navigation.CustomOverlaySceneStrategy
 import com.techullurgy.games.sudoku.presentation.navigation.Home
@@ -49,7 +50,7 @@ fun App(config: KoinConfiguration? = null) {
     KoinApplication(
         configuration =
         koinConfiguration {
-            modules(navigationModule)
+            modules(coreModule, navigationModule)
             includes(koinConfiguration<SudokuApp>(), config)
         },
     ) {

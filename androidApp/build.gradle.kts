@@ -21,9 +21,6 @@ dependencies {
 
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
-
-    androidTestImplementation(libs.androidx.compose.uitest.junit4.android)
-    androidTestImplementation(libs.androidx.compose.uitest.manifest)
 }
 
 // 1. Securely load the keystore properties
@@ -56,8 +53,6 @@ android {
                 .toInt()
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     packaging {
@@ -83,7 +78,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             // Attach the signing config we just created
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 // "proguard-rules.pro"

@@ -13,13 +13,17 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.v2.runComposeUiTest
 import com.techullurgy.games.sudoku.common.test.utils.RobolectricTest
+import com.techullurgy.games.sudoku.di.DefaultDispatcher
 import com.techullurgy.games.sudoku.presentation.screens.SudokuSolverScreen
 import com.techullurgy.games.sudoku.presentation.screens.SudokuSolverViewModel
 import com.techullurgy.games.sudoku.utils.col
 import com.techullurgy.games.sudoku.utils.row
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Rule
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 import org.koin.plugin.module.dsl.viewModel
 import org.koin.test.KoinTestRule
@@ -32,6 +36,11 @@ class SudokuSolverScreenTest: RobolectricTest() {
     val koinRule = KoinTestRule.create {
         modules(
             module {
+                single<CoroutineDispatcher>(
+                    qualifier = qualifier<DefaultDispatcher>()
+                ) {
+                    StandardTestDispatcher(mainDispatcher.scheduler)
+                }
                 viewModel<SudokuSolverViewModel>()
             }
         )

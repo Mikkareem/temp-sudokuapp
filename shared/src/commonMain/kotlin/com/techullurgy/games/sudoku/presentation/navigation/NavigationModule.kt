@@ -47,6 +47,11 @@ class Navigator internal constructor(startDestination: NavKey) {
     fun goBack() {
         backStack.removeLastOrNull()
     }
+
+    fun resetWith(destination: NavKey) {
+        backStack.clear()
+        goTo(destination)
+    }
 }
 
 @OptIn(KoinExperimentalAPI::class)
@@ -99,14 +104,25 @@ private val sudokuGameNavigationModule =
             NavDisplay.transitionSpec {
                 scaleIn() togetherWith scaleOut()
             } + CustomOverlaySceneStrategy.customOverlay(),
-        ) { GameOverDialogScreen() }
+        ) {
+            val navigator = get<Navigator>()
+            GameOverDialogScreen(
+                onNewGameClick = { navigator.resetWith(Home) }
+            )
+        }
 
         navigation<GameWonDialog>(
             metadata =
             NavDisplay.transitionSpec {
                 scaleIn() togetherWith scaleOut()
             } + CustomOverlaySceneStrategy.customOverlay(),
-        ) { GameWonDialogScreen(it.timer) }
+        ) {
+            val navigator = get<Navigator>()
+            GameWonDialogScreen(
+                timer = it.timer,
+                onNewGameClick = { navigator.resetWith(Home) }
+            )
+        }
     }
 
 @OptIn(KoinExperimentalAPI::class)

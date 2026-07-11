@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.techullurgy.games.sudoku.presentation.ui.boardAccent
 import com.techullurgy.games.sudoku.presentation.ui.container1Color
 import com.techullurgy.games.sudoku.presentation.ui.container1ContentColor
 
@@ -27,7 +28,7 @@ fun Container1(text: String, onClick: () -> Unit, modifier: Modifier = Modifier)
                 )
 
                 drawRect(
-                    color = container1Color,
+                    color = boardAccent,
                 )
             }.clickable(
                 onClick = onClick,

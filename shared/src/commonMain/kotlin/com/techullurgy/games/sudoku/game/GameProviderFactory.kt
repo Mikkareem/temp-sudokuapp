@@ -1,12 +1,18 @@
 package com.techullurgy.games.sudoku.game
 
+import com.techullurgy.games.sudoku.di.DefaultDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.qualifier.qualifier
 
-class GameProviderFactory(private val level: GameLevel, private val coroutineScope: CoroutineScope) {
+class GameProviderFactory(private val level: GameLevel, private val coroutineScope: CoroutineScope): KoinComponent {
+
+    private val defaultDispatcher by inject<CoroutineDispatcher>(qualifier = qualifier<DefaultDispatcher>())
     fun generateDefault(): SudokuGame = SudokuGame(level).also {
-        coroutineScope.launch(Dispatchers.Default) { it.generate() }
+        coroutineScope.launch(defaultDispatcher) { it.generate() }
     }
 
     fun initWithInitialBoard(initialBoardString: String): SudokuGame {

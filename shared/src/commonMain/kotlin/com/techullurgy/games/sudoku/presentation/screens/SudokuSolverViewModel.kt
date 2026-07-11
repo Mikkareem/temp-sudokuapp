@@ -2,13 +2,14 @@ package com.techullurgy.games.sudoku.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.techullurgy.games.sudoku.di.DefaultDispatcher
 import com.techullurgy.games.sudoku.game.Board
 import com.techullurgy.games.sudoku.game.SudokuSolver
 import com.techullurgy.games.sudoku.game.SudokuValidator
 import com.techullurgy.games.sudoku.utils.getRelevantBoardIndicesFor
 import com.techullurgy.games.sudoku.utils.toEnabledNumbers
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,12 +19,13 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
-import kotlin.Int
-import kotlin.collections.Set
+import org.koin.core.annotation.Provided
 import kotlin.time.Duration.Companion.milliseconds
 
 @KoinViewModel
-internal class SudokuSolverViewModel: ViewModel() {
+internal class SudokuSolverViewModel(
+    @Provided @param:DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+): ViewModel() {
     private val solver = SudokuSolver()
 
     val state: StateFlow<SudokuSolverState> field = MutableStateFlow(SudokuSolverState())
@@ -74,7 +76,7 @@ internal class SudokuSolverViewModel: ViewModel() {
 
     private fun onSolveClick() {
         solveJob?.cancel()
-        solveJob = viewModelScope.launch(Dispatchers.Default) {
+        solveJob = viewModelScope.launch(defaultDispatcher) {
             state.update {
                 it.copy(isSolving = true)
             }
