@@ -1,3 +1,4 @@
+import kotlinx.io.files.FileNotFoundException
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
@@ -25,10 +26,22 @@ dependencies {
 
 // 1. Securely load the keystore properties
 private val keystorePropertiesFile = rootProject.file("keystore.properties")
+private val versionPropertiesFile = rootProject.file("android-versions.properties")
+
 private val keystoreProperties = Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
+
+private val versionProperties = Properties()
+if(versionPropertiesFile.exists()) {
+    versionProperties.load(FileInputStream(versionPropertiesFile))
+} else {
+    throw FileNotFoundException("${versionPropertiesFile.name} is not exists in your root project")
+}
+
+private val appVersionCode = (versionProperties["version-code"]!! as String).toInt()
+private val appVersionName = "${versionProperties["version-major"]!!}.${versionProperties["version-minor"]!!}.${versionProperties["version-patch"]!!}"
 
 private enum class InstrumentedTestModes(val mode: String) {
     Connected("connected"), Pixel9aApi36("pixel9aApi36")
@@ -51,8 +64,8 @@ android {
             libs.versions.android.targetSdk
                 .get()
                 .toInt()
-        versionCode = 2
-        versionName = "1.0.2"
+        versionCode = appVersionCode
+        versionName = appVersionName
     }
 
     packaging {

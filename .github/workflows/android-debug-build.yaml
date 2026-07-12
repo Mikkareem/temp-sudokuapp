@@ -2,6 +2,26 @@ name: Android Debug Apk
 
 on:
   workflow_dispatch:
+    inputs:
+      version_code:
+        description: "Version Code"
+        required: true
+        type: number
+
+      version_major:
+        description: "Version Major"
+        required: true
+        type: number
+
+      version_minor:
+        description: "Version Minor"
+        required: true
+        type: number
+
+      version_patch:
+        description: "Version Patch"
+        required: true
+        type: number
 
 jobs:
   build:
@@ -26,6 +46,15 @@ jobs:
       # AUTOMATIC CACHING & CLEANUP AVAILABLE IN ENHANCED MODE
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
+
+      - name: Create Android Version Properties File
+        run: |
+          cat > android-versions.properties <<EOF
+          version-code=${{ inputs.version_code }}
+          version-major=${{ inputs.version_major }}
+          version-minor=${{ inputs.version_minor }}
+          version-patch=${{ inputs.version_patch }}
+          EOF
           
       - name: Build Debug App
         run: ./gradlew :androidApp:assembleDebug
